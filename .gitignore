@@ -1,17 +1,1 @@
 node_modules/
-.env
-*.log
-
-# Docker
-docker-image.tar
-
-# VS Code
-.vscode/
-
-# OS files
-.DS_Store
-
-# Build artifacts
-dist/
-build/
-node_modules/
