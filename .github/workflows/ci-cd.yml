@@ -19,25 +19,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm test
 
       - name: Login to DockerHub
+        if: github.event_name == 'push'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image
+      - name: Build Docker image
+        if: github.event_name == 'push'
         run: docker build -t shubh9852/myapp:${{ github.sha }} .
 
-      - name: Push Docker Image
+      - name: Push Docker image
+        if: github.event_name == 'push'
         run: docker push shubh9852/myapp:${{ github.sha }}
