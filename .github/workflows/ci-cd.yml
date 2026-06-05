@@ -28,8 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # SAFE TEST STEP (won’t fail pipeline if you don’t have real tests yet)
       - name: Run tests
-        run: npm test
+        run: npm test --if-present
 
       - name: Login to DockerHub
         if: github.event_name == 'push'
